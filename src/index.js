@@ -1,13 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 
-// 
-// Goal: Add body for each note
-// 
-// 1. Allow users to add body to each note
-// 2. Render the body alongside the note title
-// 3. Test your work!
 
 const NoteApp = () => {
   const [notes, setNotes] = useState([]);
@@ -45,26 +39,31 @@ const NoteApp = () => {
   );
 }
 
-// const App = (props) => {
-//   const [count, setCount] = useState(props.count);
-//   const [text, setText] = useState('');
+const App = (props) => {
+  const [count, setCount] = useState(props.count);
+  const [text, setText] = useState('');
 
-//   return (
-//     <div>
-//       <p>The current {text || 'count'} is {count}</p>
-//       <button onClick={() => setCount(count + 1)}>+1</button>
-//       <button onClick={() => setCount(count - 1)}>-1</button>
-//       <button onClick={() => setCount(props.count)}>reset</button>
-//       <input value={text} onChange={(e) => setText(e.target.value)} />
-//     </div>
-//   );
-// }
+  useEffect(() => {
+    console.log('useEffect ran');
+    document.title = count;
+  });
 
-// App.defaultProps = {
-//   count: 0
-// }
+  return (
+    <div>
+      <p>The current {text || 'count'} is {count}</p>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+      <button onClick={() => setCount(count - 1)}>-1</button>
+      <button onClick={() => setCount(props.count)}>reset</button>
+      <input value={text} onChange={(e) => setText(e.target.value)} />
+    </div>
+  );
+}
 
-ReactDOM.render(<NoteApp/>, document.getElementById('root'));
+App.defaultProps = {
+  count: 0
+}
+
+ReactDOM.render(<App count={0}/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
