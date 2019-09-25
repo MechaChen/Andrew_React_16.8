@@ -2,14 +2,23 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 
+// 
+// Goal: Add body for each note
+// 
+// 1. Allow users to add body to each note
+// 2. Render the body alongside the note title
+// 3. Test your work!
+
 const NoteApp = () => {
   const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
 
   const addNote = (e) => {
     e.preventDefault();
-    setNotes([ ...notes, { title } ]);
-    setTitle(' ');
+    setNotes([ ...notes, { title, body } ]);
+    setTitle('');
+    setBody('');
   }
 
   const removeNote = (title) => {
@@ -22,12 +31,14 @@ const NoteApp = () => {
       {notes.map((note) => (
         <div key={note.title}>
           <h3>{note.title}</h3>
+          <p>{note.body}</p>
           <button onClick={() => removeNote(note.title)}>x</button>
         </div>
       ))}
       <p>Add Note</p>
       <form onSubmit={addNote}>
         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+        <textarea value={body} onChange={(e) => setBody(e.target.value)}></textarea>
         <button>add note</button>
       </form>
     </div>
