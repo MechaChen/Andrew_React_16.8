@@ -2,35 +2,17 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 
-// 
-// Goal: Add -1 and reset button to component
-//
-// 1. Allow initial count to be configured using a count prop (default to 0)
-// 2. Add "-1" button to reduce count by 1
-// 3. Add "reset" button to reset count
-// 4. Test your work!
-
 const App = (props) => {
   const [count, setCount] = useState(props.count);
-
-  const increment = () => {
-    setCount(count + 1);
-  }
-
-  const decrement = () => {
-    setCount(count - 1);
-  }
-
-  const reset = () => {
-    setCount(props.count);
-  }
+  const [text, setText] = useState('');
 
   return (
     <div>
-      <p>The current count is {count}</p>
-      <button onClick={increment}>+1</button>
-      <button onClick={decrement}>-1</button>
-      <button onClick={reset}>reset</button>
+      <p>The current {text || 'count'} is {count}</p>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+      <button onClick={() => setCount(count - 1)}>-1</button>
+      <button onClick={() => setCount(props.count)}>reset</button>
+      <input value={text} onChange={(e) => setText(e.target.value)} />
     </div>
   );
 }
