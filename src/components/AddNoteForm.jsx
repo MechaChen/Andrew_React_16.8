@@ -1,9 +1,11 @@
 import React, { useState, useContext } from 'react';
 import NotesContext from '../context/note-context';
+import useMousePosition from '../hooks/useMousePosition';
 
 const AddNoteForm = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const position = useMousePosition();
 
   const { dispatch } = useContext(NotesContext);
 
@@ -16,7 +18,7 @@ const AddNoteForm = () => {
 
   return (
     <>
-      <p>Add Note</p>
+      <p>Add Note {position.x} - {position.y}</p>
       <form onSubmit={addNote}>
         <input 
           type="text" 
