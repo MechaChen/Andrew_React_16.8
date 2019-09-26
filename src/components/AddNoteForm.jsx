@@ -15,7 +15,8 @@ const AddNoteForm = () => {
   }
 
   return (
-    <div>
+    <>
+      <p>Add Note</p>
       <form onSubmit={addNote}>
         <input 
           type="text" 
@@ -29,7 +30,7 @@ const AddNoteForm = () => {
         </textarea>
         <button>add note</button>
       </form>
-    </div>
+    </>
   );
 }
 
