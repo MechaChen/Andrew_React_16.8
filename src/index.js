@@ -1,29 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 
+const notesReducer = (state, action) => {
+  switch(action.type) {
+    case 'POPULATE_NOTES':
+      return [...state, action.notes];
+    default:
+      return state;
+  }
+}
 
 const NoteApp = () => {
-  const [notes, setNotes] = useState([]);
+  const [notes, dispatch] = useReducer(notesReducer, []);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
   const addNote = (e) => {
     e.preventDefault();
-    setNotes([ ...notes, { title, body } ]);
+    // setNotes([ ...notes, { title, body } ]);
     setTitle('');
     setBody('');
   }
   
   const removeNote = (title) => {
-    setNotes(notes.filter((note) => note.title !== title));
+    // setNotes(notes.filter((note) => note.title !== title));
   }
 
   useEffect(() => {
-    const notesData = JSON.parse(localStorage.getItem('notes'));
+    const notes = JSON.parse(localStorage.getItem('notes'));
     
-    if(notesData) {
-      setNotes(notesData);
+    if(notes) {
+      dispatch({ type: 'POUPLATE_NOTES', notes })
     }
   }, []);
   
@@ -37,8 +45,16 @@ const NoteApp = () => {
       {notes.map((note) => <Note key={note.title} note={note} removeNote ={removeNote}/>)}
       <p>Add Note</p>
       <form onSubmit={addNote}>
-        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
-        <textarea value={body} onChange={(e) => setBody(e.target.value)}></textarea>
+        <input 
+          type="text" 
+          value={title} 
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <textarea 
+          value={body} 
+          onChange={(e) => setBody(e.target.value)}
+        >
+        </textarea>
         <button>add note</button>
       </form>
     </div>
