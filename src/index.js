@@ -2,10 +2,24 @@ import React, { useState, useEffect, useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 
+// 
+// Goal: Setup support for adding and removing notes
+// 
+// 1. Setup and dispatch an ADD_NOTE action
+// 2. Setup and dispatch a REMOVE_NOTE action
+// 3. Test your work!
+
 const notesReducer = (state, action) => {
   switch(action.type) {
     case 'POPULATE_NOTES':
       return [...state, action.notes];
+    case 'ADD_NOTE':
+      return [
+        ...state, 
+        { title: action.title, body: action.body }
+      ];
+    case 'REMOVE_NOTE':
+      return state.filter(note => note.title !== action.title);
     default:
       return state;
   }
@@ -18,13 +32,13 @@ const NoteApp = () => {
 
   const addNote = (e) => {
     e.preventDefault();
-    // setNotes([ ...notes, { title, body } ]);
+    dispatch({ type: 'ADD_NOTE', title, body });
     setTitle('');
     setBody('');
   }
   
   const removeNote = (title) => {
-    // setNotes(notes.filter((note) => note.title !== title));
+    dispatch({ type: 'REMOVE_NOTE', title });
   }
 
   useEffect(() => {
