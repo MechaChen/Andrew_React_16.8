@@ -2,80 +2,77 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 
-// 
-// Goal: Synchronize notes data with localStorage
-// 
-// 1. Read notes data from localStorage
-//    - No data stored? Default to empty array
-// 2. Call useEffect to update localStorage when notes array changes
-// 3. Test your work!
 
-const NoteApp = () => {
-  const notesData = localStorage.getItem('notes');
-  const [notes, setNotes] = useState(notesData || []);
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+// const NoteApp = () => {
+//   const notesData = localStorage.getItem('notes');
+//   const [notes, setNotes] = useState(notesData || []);
+//   const [title, setTitle] = useState('');
+//   const [body, setBody] = useState('');
 
-  const addNote = (e) => {
-    e.preventDefault();
-    setNotes([ ...notes, { title, body } ]);
-    setTitle('');
-    setBody('');
-  }
+//   const addNote = (e) => {
+//     e.preventDefault();
+//     setNotes([ ...notes, { title, body } ]);
+//     setTitle('');
+//     setBody('');
+//   }
   
-  const removeNote = (title) => {
-    setNotes(notes.filter((note) => note.title !== title));
-  }
+//   const removeNote = (title) => {
+//     setNotes(notes.filter((note) => note.title !== title));
+//   }
   
-  useEffect(() => {
-    localStorage.setItem('notes', JSON.stringify(notes));
-  });
-
-  return (
-    <div>
-      <h1>Notes</h1>
-      {notes.map((note) => (
-        <div key={note.title}>
-          <h3>{note.title}</h3>
-          <p>{note.body}</p>
-          <button onClick={() => removeNote(note.title)}>x</button>
-        </div>
-      ))}
-      <p>Add Note</p>
-      <form onSubmit={addNote}>
-        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
-        <textarea value={body} onChange={(e) => setBody(e.target.value)}></textarea>
-        <button>add note</button>
-      </form>
-    </div>
-  );
-}
-
-// const App = (props) => {
-//   const [count, setCount] = useState(props.count);
-//   const [text, setText] = useState('');
-
 //   useEffect(() => {
-//     console.log('useEffect ran');
-//     document.title = count;
+//     localStorage.setItem('notes', JSON.stringify(notes));
 //   });
 
 //   return (
 //     <div>
-//       <p>The current {text || 'count'} is {count}</p>
-//       <button onClick={() => setCount(count + 1)}>+1</button>
-//       <button onClick={() => setCount(count - 1)}>-1</button>
-//       <button onClick={() => setCount(props.count)}>reset</button>
-//       <input value={text} onChange={(e) => setText(e.target.value)} />
+//       <h1>Notes</h1>
+//       {notes.map((note) => (
+//         <div key={note.title}>
+//           <h3>{note.title}</h3>
+//           <p>{note.body}</p>
+//           <button onClick={() => removeNote(note.title)}>x</button>
+//         </div>
+//       ))}
+//       <p>Add Note</p>
+//       <form onSubmit={addNote}>
+//         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+//         <textarea value={body} onChange={(e) => setBody(e.target.value)}></textarea>
+//         <button>add note</button>
+//       </form>
 //     </div>
 //   );
 // }
 
-// App.defaultProps = {
-//   count: 0
-// }
+const App = (props) => {
+  const [count, setCount] = useState(props.count);
+  const [text, setText] = useState('');
 
-ReactDOM.render(<NoteApp />, document.getElementById('root'));
+  useEffect(() => {
+    console.log('This sould only run once!');
+  }, []);
+
+  useEffect(() => {
+    console.log('useEffect ran');
+    document.title = count;
+  }, [count]);
+
+  return (
+    <div>
+      <p>The current {text || 'count'} is {count}</p>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+      <button onClick={() => setCount(count - 1)}>-1</button>
+      <button onClick={() => setCount(props.count)}>reset</button>
+      <input value={text} onChange={(e) => setText(e.target.value)} />
+    </div>
+  );
+}
+
+App.defaultProps = {
+  count: 0
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
