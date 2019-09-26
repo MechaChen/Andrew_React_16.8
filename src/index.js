@@ -2,9 +2,17 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 
+// 
+// Goal: Synchronize notes data with localStorage
+// 
+// 1. Read notes data from localStorage
+//    - No data stored? Default to empty array
+// 2. Call useEffect to update localStorage when notes array changes
+// 3. Test your work!
 
 const NoteApp = () => {
-  const [notes, setNotes] = useState([]);
+  const notesData = localStorage.getItem('notes');
+  const [notes, setNotes] = useState(notesData || []);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
@@ -14,10 +22,14 @@ const NoteApp = () => {
     setTitle('');
     setBody('');
   }
-
+  
   const removeNote = (title) => {
     setNotes(notes.filter((note) => note.title !== title));
   }
+  
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes));
+  });
 
   return (
     <div>
@@ -39,31 +51,31 @@ const NoteApp = () => {
   );
 }
 
-const App = (props) => {
-  const [count, setCount] = useState(props.count);
-  const [text, setText] = useState('');
+// const App = (props) => {
+//   const [count, setCount] = useState(props.count);
+//   const [text, setText] = useState('');
 
-  useEffect(() => {
-    console.log('useEffect ran');
-    document.title = count;
-  });
+//   useEffect(() => {
+//     console.log('useEffect ran');
+//     document.title = count;
+//   });
 
-  return (
-    <div>
-      <p>The current {text || 'count'} is {count}</p>
-      <button onClick={() => setCount(count + 1)}>+1</button>
-      <button onClick={() => setCount(count - 1)}>-1</button>
-      <button onClick={() => setCount(props.count)}>reset</button>
-      <input value={text} onChange={(e) => setText(e.target.value)} />
-    </div>
-  );
-}
+//   return (
+//     <div>
+//       <p>The current {text || 'count'} is {count}</p>
+//       <button onClick={() => setCount(count + 1)}>+1</button>
+//       <button onClick={() => setCount(count - 1)}>-1</button>
+//       <button onClick={() => setCount(props.count)}>reset</button>
+//       <input value={text} onChange={(e) => setText(e.target.value)} />
+//     </div>
+//   );
+// }
 
-App.defaultProps = {
-  count: 0
-}
+// App.defaultProps = {
+//   count: 0
+// }
 
-ReactDOM.render(<App count={0}/>, document.getElementById('root'));
+ReactDOM.render(<NoteApp />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
