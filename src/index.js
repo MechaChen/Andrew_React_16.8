@@ -34,19 +34,31 @@ const NoteApp = () => {
   return (
     <div>
       <h1>Notes</h1>
-      {notes.map((note) => (
-        <div key={note.title}>
-          <h3>{note.title}</h3>
-          <p>{note.body}</p>
-          <button onClick={() => removeNote(note.title)}>x</button>
-        </div>
-      ))}
+      {notes.map((note) => <Note key={note.title} note={note} removeNote ={removeNote}/>)}
       <p>Add Note</p>
       <form onSubmit={addNote}>
         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
         <textarea value={body} onChange={(e) => setBody(e.target.value)}></textarea>
         <button>add note</button>
       </form>
+    </div>
+  );
+}
+
+const Note = ({ note, removeNote }) => {
+  useEffect(() => {
+    console.log('Setting up effect');
+
+    return () => {
+      console.log(`${note.title} is Unmount`);
+    }
+  }, [note]);
+
+  return (
+    <div>
+      <h3>{note.title}</h3>
+      <p>{note.body}</p>
+      <button onClick={() => removeNote(note.title)}>x</button>
     </div>
   );
 }
