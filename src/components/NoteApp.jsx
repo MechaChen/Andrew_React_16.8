@@ -26,18 +26,16 @@ const NoteApp = () => {
       <h1>Notes</h1>
       <NoteList />
       <p>Add Note</p>
-      <AddNoteForm dispatch={dispatch}/>
+      <AddNoteForm />
     </NotesContext.Provider>
   );
 }
 
 // 
-// Goal: Continue refactoring the app
+// Goal: Refactor AddNoteForm to use context
 // 
-// 1. Create AddNoteForm component
-//    - What state is that JSX using? Make it local to new component
-//    - What function is that JSX using? It should only need dispatch from the parent
-// 2. Render AddNoteFrom in NoteAPp
+// 1. Remove the need for the dispatch prop
+// 2. Grab dispatch off of context instead
 // 3. Test your work!
 
 export default NoteApp;
