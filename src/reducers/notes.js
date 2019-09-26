@@ -1,7 +1,7 @@
 const notesReducer = (state, action) => {
   switch(action.type) {
     case 'POPULATE_NOTES':
-      return [...state, action.notes];
+      return [...state, ...action.notes];
     case 'ADD_NOTE':
       return [
         ...state, 
